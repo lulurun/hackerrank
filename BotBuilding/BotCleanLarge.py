@@ -42,7 +42,7 @@ def next_move(posx, posy, dimx, dimy, board):
 if __name__ == "__main__":
     pos = [int(i) for i in input().strip().split()]
     dimx,dimy=[int(i) for i in input().strip().split()]
-    board = [[j for j in input().strip()] for i in range(dimy)]
+    board = [[j for j in input().strip()] for i in range(dimx)]
     #print(pos,board)
     #find_path([1,3],[3,-1])
     next_move(pos[0], pos[1], dimx, dimy, board)
