@@ -1,21 +1,10 @@
 #!/usr/bin/python
 
 # Head ends here
-def nextMove(x, y, pacman_x, pacman_y, food_x, food_y, grid):
-    path=dfs(pacman_x, pacman_y, grid)
-    print(len(path))
-    for v in path:
-        try:
-            print(v[0], v[1])
-        except IndexError:
-            print(v)
-    print(len(path) - 1)
-    for v in path:
-        try:
-            print(v[0], v[1])
-        except IndexError:
-            print(v)
-    return
+
+def mark(x, y, grid):
+    grid[x] = grid[x][0:y] + 'E' + grid[x][y + 1:]
+    return grid
 
 def get_adjacent(vertex_x, vertex_y, grid):
     vertexex = []
@@ -29,36 +18,46 @@ def get_adjacent(vertex_x, vertex_y, grid):
         vertexex.append((vertex_x + 1, vertex_y))
     return vertexex
 
-def dfs(pacx, pacy, grid):
-    stack=[]
-    ret=[]
-    stack.append((pacx,pacy))
-    flag=True
+def dfs(x, y, pacx, pacy, food_x, food_y, grid):
+    stack = []
+    ret = []
+    parentMap = dict()
+    stack.append((pacx, pacy))
+    flag = True
     while stack and flag:
         tmp = stack.pop()
-        #print('tmp',tmp)
+        # print('tmp',tmp)
         ret.append(tmp)
-        grid[tmp[0]] = grid[tmp[0]][0:tmp[1]] + 'x' + grid[tmp[0]][tmp[1]+1:]
-        adjs=get_adjacent(tmp[0], tmp[1], grid)
-        #print('adjs',adjs)
+        adjs = get_adjacent(tmp[0], tmp[1], grid)
+        # print('adjs',adjs)
         for adj in adjs:
-            if grid[adj[0]][adj[1]]=='.':
-                ret.append(adj)
-                flag = False
             stack.append(adj)
-        #print('stack',stack)
-        #print(*grid,sep='\n')
-    print(*grid,sep='\n')
-    return ret
-
-# Tail starts here
-
+            grid = mark(adj[0], adj[1], grid)
+            parentMap[adj] = tmp
+        if tmp == (food_x, food_y):
+            flag = False
+    path = []
+    curr = (food_x, food_y)
+    while (curr != None):
+        path.append(curr)
+        try:
+            curr = parentMap[curr]
+        except KeyError:
+            curr = None
+    path.reverse()
+    print(len(ret))
+    for x in ret:
+        print(*x)
+    print(len(path) - 1)
+    for x in path:
+        print(*x)
+    
 pacman_x, pacman_y = [ int(i) for i in input().strip().split() ]
 food_x, food_y = [ int(i) for i in input().strip().split() ]
-x,y = [ int(i) for i in input().strip().split() ]
+x, y = [ int(i) for i in input().strip().split() ]
 
 grid = []
 for i in range(0, x):
     grid.append(input().strip())
 
-nextMove(x, y, pacman_x, pacman_y, food_x, food_y, grid)
+dfs(x, y, pacman_x, pacman_y, food_x, food_y, grid)
