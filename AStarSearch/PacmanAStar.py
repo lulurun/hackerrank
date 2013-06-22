@@ -35,6 +35,7 @@ def nextMove(x, y, pacman_x, pacman_y, food_x, food_y, grid):
     cost_map = {start:0}
     parent_map = dict()
     while queue:
+    # TODO: something must be wrong here. Visiting more nodes than expected.
         temp_cost_list = []
         for x in queue:
             temp_cost_list.append(cost_map[x] + manhattan(x, (food_x, food_y)))
