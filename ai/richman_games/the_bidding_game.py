@@ -4,13 +4,11 @@ Created on Jul 21, 2013
 @author: Nirvam
 '''
 
+# TODO(Nirvam): Math part difficult. Abandoned.
+
 def get_input():
     '''Reads input. Hackerrank style.'''
-    l=input()
-    lines=[]
-    for i in range(int(l)):
-        lines.append(input())
-    return l,lines
+    pass
 
 
 def calculate_bid(player,pos,first_moves,second_moves):

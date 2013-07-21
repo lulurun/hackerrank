@@ -30,7 +30,7 @@ For the first case, the lucky numbers are 11, 12, 14, 16.
 For the second case, the only lucky number is 120.
 '''
 
-#from numpy import random
+# TODO:(Nirvam) Answer not accepted by hackerrank. Too slow.
 import random
 
 def _get_input():
